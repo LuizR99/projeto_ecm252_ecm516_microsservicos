@@ -1,6 +1,5 @@
 const express = require('express');
-const { expressjwt: jwt } = require('express-jwt')
-const jwksClient = require('jwks-rsa')
+
 
 const User = require('../models/user');
 
