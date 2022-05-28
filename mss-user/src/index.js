@@ -14,7 +14,7 @@ app.use(
         rateLimit: true,
     }),
     algorithms: ['RS256']
-    }).unless({path: ["/user/register"]})
+    }).unless({path: { url: '/user', methods: ['POST']}})
 )
 
 require('./controllers/userController')(app);
