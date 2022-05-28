@@ -43,10 +43,10 @@ router.put("/", async (req, res)  => {
         const updatedUser = await User.updateOne({ _id: id }, user);
 
         if (updatedUser.matchedCount === 0) 
-            return res.status(422).json({ message: 'User not found!' });
+            return res.status(400).json({ message: 'User not found!' });
 
 
-        res.status(200).json(user);
+        res.status(200).json({user});
     }
     catch(error){
         res.status(500).json({error: error})
@@ -85,10 +85,11 @@ router.get("/",async (req, res) => {
 });
 
 router.get("/:id",async (req, res) => {
-    const result = await User.find({_id: req.params.id});
-    res.send(result);
+    const users = await User.find({_id: req.params.id});
+    res.send({users});
 });
 
 
 
-module.exports = app => app.use('/user', router);
+
+module.exports = app => app.use('/api/user', router);

@@ -26,4 +26,4 @@ router.post('/login', async (req, res) => {
     res.send({token});
 });
 
-module.exports = app => app.use('/auth', router);
+module.exports = app => app.use('/api/auth', router);

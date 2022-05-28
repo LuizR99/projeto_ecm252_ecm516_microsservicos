@@ -14,7 +14,7 @@ app.use(
         rateLimit: true,
     }),
     algorithms: ['RS256']
-    }).unless({path: { url: '/user', methods: ['POST']}})
+    }).unless({path: { url: '/api/user', methods: ['POST']}})
 )
 
 require('./controllers/userController')(app);
