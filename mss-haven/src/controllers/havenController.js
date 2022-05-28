@@ -25,8 +25,6 @@ router.post('/', async (req, res) => {
 
 });
 
-
-
 router.put('/:id', async (req, res) => {
     const havenId = req.params.id;
     const {typeHouse, description, location, typePeople, quantityPeople} = req.body;
