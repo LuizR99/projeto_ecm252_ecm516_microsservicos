@@ -18,9 +18,9 @@ router.post('/', async (req, res) => {
     try {
         const newHaven = await User.create(haven);
 
-        return res.status(201).send({newHaven});
+        return res.status(201).send({success:false, data: newHaven});
     } catch (err) {
-        return res.status(400).send({error: 'Registration failed'});
+        return res.status(400).send({success:true, error: 'Registration failed'});
     }
 
 });
@@ -41,11 +41,11 @@ router.put('/:id', async (req, res) => {
         const updateHaven = await User.updateOne({_id: havenId},haven);
 
         if (updateHaven.matchedCount === 0) 
-            return res.status(400).json({ message: 'User not found!' });
+            return res.status(400).json({success:false, message: 'User not found!' });
 
-        return res.status(200).send({haven});
+        return res.status(200).send({success:true, data: haven});
     } catch (err) {
-        return res.status(400).send({error: 'Registration failed'});
+        return res.status(400).send({success:false, error: 'Registration failed'});
     }
 
 });
@@ -55,9 +55,9 @@ router.put('/:id', async (req, res) => {
 router.get('/', async (req, res) => {
     try {
         const havents = await User.find();
-        return res.status(200).send({havents});
+        return res.status(200).send({success:true, data: havents});
     } catch (err) {
-        return res.status(400).send({error: 'Registration failed'});
+        return res.status(400).send({success:false, error: 'Registration failed'});
     }
 })
 
@@ -65,9 +65,9 @@ router.get('/user', async (req, res) => {
     const id = req.auth.id;
     try {
         const havents = await User.find({idUser: id});
-        return res.status(200).send({havents});
+        return res.status(200).send({success:true, data: havents});
     } catch (err) {
-        return res.status(400).send({error: 'Registration failed'});
+        return res.status(400).send({success:false, error: 'Registration failed'});
     }
 });
 
@@ -75,9 +75,9 @@ router.get('/:id', async (req, res) => {
     const id = req.params.id;
     try {
         const havents = await User.find({_id: id});
-        return res.status(200).send({havents});
+        return res.status(200).send({success:true, data: havents});
     } catch (err) {
-        return res.status(400).send({error: 'Registration failed'});
+        return res.status(400).send({success:false, error: 'Registration failed'});
     }
 })
 

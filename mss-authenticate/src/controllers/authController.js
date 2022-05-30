@@ -18,12 +18,12 @@ router.post('/login', async (req, res) => {
         return res.status(400).send({error: 'User not found'});
     
     if(!await bcrypt.compare(password, user.password))
-        return res.status(400).send({error: 'Invalid password'});
+        return res.status(400).send({success:false, error: 'Invalid password'});
     
     user.password = undefined;
 
     const token = JWT.sign({id: user.id}, secret, {expiresIn: '1h', algorithm: 'RS256'});
-    res.send({token});
+    res.send({success:true, token});
 });
 
 module.exports = app => app.use('/api/auth', router);

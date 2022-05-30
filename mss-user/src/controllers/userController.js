@@ -10,20 +10,20 @@ router.post("/", async (req, res) => {
     const {email} = req.body;
     try{
         if(await User.findOne({email}))
-            return res.status(400).send({error: 'User already exists'});
+            return res.status(400).send({success:false, error: 'User already exists'});
 
         const {password, confirmPassword} = req.body;
         if(password !== confirmPassword)
-            return res.status(400).send({error: 'Passwords do not match'});
+            return res.status(400).send({success:false, error: 'Passwords do not match'});
 
         const user = await User.create(req.body);
 
         user.password = undefined;
 
-        return res.status(201).send({user});
+        return res.status(201).send({success:true, user});
     }
     catch(err){
-        return res.status(400).send({error: 'Registration failed'});
+        return res.status(400).send({success:false, error: 'Registration failed'});
     }
 
 });
@@ -43,13 +43,13 @@ router.put("/", async (req, res)  => {
         const updatedUser = await User.updateOne({ _id: id }, user);
 
         if (updatedUser.matchedCount === 0) 
-            return res.status(400).json({ message: 'User not found!' });
+            return res.status(400).json({ success:false, message: 'User not found!' });
 
 
-        res.status(200).json({user});
+        res.status(200).json({success:true, user});
     }
     catch(error){
-        res.status(500).json({error: error})
+        res.status(500).json({success:false, error: error})
     }
 
 });
@@ -59,7 +59,7 @@ router.put("/password", async (req, res)  => {
     const {password, confirmPassword} = req.body;
 
     if(password !== confirmPassword)
-            return res.status(400).send({error: 'Passwords do not match'});
+            return res.status(400).send({success:false, error: 'Passwords do not match'});
 
     try{
         const hash = await bcrypt.hash(password, 10);
@@ -67,26 +67,26 @@ router.put("/password", async (req, res)  => {
         const updatedUser = await User.updateOne({ _id: id }, user);
 
         if (updatedUser.matchedCount === 0) {
-            res.status(422).json({ message: 'User not found!' })
+            res.status(400).json({success:false,  message: 'User not found!' })
             return
         }
 
-        res.status(200).json("Password updade with success!");
+        res.status(200).json({success:true, message:"Password updade with success!"});
     }
     catch(error){
-        res.status(500).json({error: error})
+        res.status(500).json({success:false, error: error})
     }
 
 });
 
 router.get("/",async (req, res) => {
     const result = await User.find({_id: req.auth.id});
-    res.send(result);
+    res.send({success:true, result});
 });
 
 router.get("/:id",async (req, res) => {
     const users = await User.find({_id: req.params.id});
-    res.send({users});
+    res.send({success:true, users});
 });
 
 
