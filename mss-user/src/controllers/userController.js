@@ -20,7 +20,7 @@ router.post("/", async (req, res) => {
 
         user.password = undefined;
 
-        return res.status(201).send({success:true, user});
+        return res.status(201).send({success:true, data: user});
     }
     catch(err){
         return res.status(400).send({success:false, error: 'Registration failed'});
@@ -46,7 +46,7 @@ router.put("/", async (req, res)  => {
             return res.status(400).json({ success:false, message: 'User not found!' });
 
 
-        res.status(200).json({success:true, user});
+        res.status(200).json({success:true, data: user});
     }
     catch(error){
         res.status(500).json({success:false, error: error})
@@ -65,7 +65,7 @@ router.put("/password", async (req, res)  => {
         const hash = await bcrypt.hash(password, 10);
         const user = {password: hash};
         const updatedUser = await User.updateOne({ _id: id }, user);
-
+git
         if (updatedUser.matchedCount === 0) {
             res.status(400).json({success:false,  message: 'User not found!' })
             return
@@ -81,12 +81,12 @@ router.put("/password", async (req, res)  => {
 
 router.get("/",async (req, res) => {
     const result = await User.find({_id: req.auth.id});
-    res.send({success:true, result});
+    res.send({success:true, data: result});
 });
 
 router.get("/:id",async (req, res) => {
     const users = await User.find({_id: req.params.id});
-    res.send({success:true, users});
+    res.send({success:true, data: users});
 });
 
 
