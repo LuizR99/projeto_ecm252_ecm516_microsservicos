@@ -12,7 +12,8 @@ export class LoginComponent {
 
 
   Submit():void {
-
+    console.log(this.email)
+    console.log(this.password)
   }
 
 }
