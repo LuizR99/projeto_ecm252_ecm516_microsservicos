@@ -17,7 +17,8 @@ import { CadastroComponent } from './cadastro/cadastro.component'
   declarations: [
     AppComponent,
     LoginComponent,
-    CadastroComponent
+    CadastroComponent,
+    
   ],
   imports: [
     BrowserAnimationsModule,
@@ -28,6 +29,7 @@ import { CadastroComponent } from './cadastro/cadastro.component'
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+
   ],
   providers: [],
   bootstrap: [AppComponent]
