@@ -1,12 +1,23 @@
 <p>
-    <mat-toolbar color="primary">
-      <span>Exemplo login</span>
-      <span class="espacamento-toolbar"></span>
-      <button mat-icon-button>
-        <mat-icon>logout</mat-icon>
-      </button>
-    </mat-toolbar>
+  <mat-toolbar color="primary">
+    <button mat-icon-button class="example-icon" aria-label="Example icon-button with menu icon">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>Haven Project</span>
+    <span class="toolbar-spacer"></span>
+    <button mat-button (click)="navLogin()" *ngIf="!isLogado">Login</button>
+    <button mat-button [matMenuTriggerFor]="menu">
+      <div mat-card-avatar class="example-header-image" *ngIf="isLogado"></div>
+    </button>
+    <mat-menu #menu="matMenu">
+      <button mat-menu-item>Edit Perfil</button>
+      <button mat-menu-item (click)="addHaven()">Add Haven</button>
+      <button mat-menu-item >Mudar Senha</button>
+      <button mat-menu-item (click)="logout()">Logout</button>
+    </mat-menu>
+  </mat-toolbar>
 </p>
+
 
 <mat-card-content>
     <router-outlet></router-outlet>

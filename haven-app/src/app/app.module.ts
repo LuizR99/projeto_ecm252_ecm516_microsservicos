@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
 
 
 import { MatCardModule } from '@angular/material/card';
@@ -16,19 +16,30 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatIconModule } from '@angular/material/icon';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import {MatListModule} from '@angular/material/list';
 import { PrincipalComponent } from './pages/compartilhado/principal/principal.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
-import { UsuarioService } from './services/usuario.service';
+import { AuthService } from './services/auth.service';
+import { ItemCardComponent } from './pages/item-card/item-card.component';
+import { HavenService } from './services/haven.service';
+import { RegisterComponent } from './pages/register/register.component';
+import { UserService } from './services/user.service';
+import {MatMenuModule} from '@angular/material/menu';
+import { RegisterHavenComponent } from './register-haven/register-haven.component'
 
 @NgModule({
   declarations: [
     AppComponent,
     PrincipalComponent,
     HomeComponent,
-    LoginComponent
+    LoginComponent,
+    ItemCardComponent,
+    RegisterComponent,
+    RegisterHavenComponent
   ],
   imports: [
+    MatMenuModule,
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -41,9 +52,10 @@ import { UsuarioService } from './services/usuario.service';
     MatSidenavModule,
     MatToolbarModule,
     MatIconModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatListModule,
   ],
-  providers: [UsuarioService],
+  providers: [AuthService, HavenService, UserService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

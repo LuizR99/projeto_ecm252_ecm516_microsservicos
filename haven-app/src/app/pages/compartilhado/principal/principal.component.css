@@ -1,3 +1,11 @@
 .espacamento-toolbar {
     flex: 1 1 auto;
   }
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.example-header-image {
+  background-image: url('https://thumbs.dreamstime.com/b/%C3%ADcone-masculino-da-imagem-do-perfil-do-avatar-do-defeito-placeholder-cinzento-da-foto-do-homem-88414414.jpg');
+  background-size: cover;
+}
