@@ -26,7 +26,12 @@ import { HavenService } from './services/haven.service';
 import { RegisterComponent } from './pages/register/register.component';
 import { UserService } from './services/user.service';
 import {MatMenuModule} from '@angular/material/menu';
-import { RegisterHavenComponent } from './register-haven/register-haven.component'
+import { RegisterHavenComponent } from './pages/register-haven/register-haven.component';
+import { EditUserComponent } from './pages/edit-user/edit-user.component';
+import { ChangePasswordComponent } from './pages/change-password/change-password.component';
+import { HavensComponent } from './pages/havens/havens.component';
+import { UpdateHavenComponent } from './pages/update-haven/update-haven.component';
+
 
 @NgModule({
   declarations: [
@@ -36,7 +41,11 @@ import { RegisterHavenComponent } from './register-haven/register-haven.componen
     LoginComponent,
     ItemCardComponent,
     RegisterComponent,
-    RegisterHavenComponent
+    RegisterHavenComponent,
+    EditUserComponent,
+    ChangePasswordComponent,
+    HavensComponent,
+    UpdateHavenComponent 
   ],
   imports: [
     MatMenuModule,

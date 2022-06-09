@@ -1,6 +1,11 @@
 const mongoose = require('../database');
 
 const HavenSchema = new mongoose.Schema({
+    id: {
+        type: String,
+        unique: true,
+        required: true,
+    },
     idUser: {
         type: String,
         require: true,

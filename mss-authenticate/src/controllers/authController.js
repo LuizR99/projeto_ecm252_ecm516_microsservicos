@@ -10,9 +10,10 @@ const router = express.Router();
 
 router.post('/login', async (req, res) => {
     const {email, password} = req.body;
+    userName = email;
     const secret = fs.readFileSync("./certs/jwtRS256.key");
 
-    const user = await User.findOne({email}).select("+password");
+    const user = await User.findOne({userName}).select("+password");
 
     if(!user)
         return res.status(400).send({error: 'User not found'});
@@ -24,6 +25,46 @@ router.post('/login', async (req, res) => {
 
     const token = JWT.sign({id: user.id}, secret, {expiresIn: '1h', algorithm: 'RS256'});
     res.send({success:true, token});
+});
+
+router.post('/register', async (req, res) => {
+    const {userName} = req.body;
+    try{
+        if(await User.findOne({userName}))
+            return res.status(400).send({success:false, error: 'User already exists'});
+
+        const user = await User.create(req.body);
+        user.password = undefined;
+
+        return res.status(201).send({success:true, data: user});
+    }
+    catch(err){
+        return res.status(400).send({success:false, error: 'Registration failed'});
+    }
+});
+
+router.put("/password", async (req, res)  => {
+    const id = req.auth.id;
+    const {password, confirmPassword} = req.body;
+
+    if(password !== confirmPassword)
+            return res.status(400).send({success:false, error: 'Passwords do not match'});
+
+    try{
+        const hash = await bcrypt.hash(password, 10);
+        const user = {password: hash};
+        const updatedUser = await User.updateOne({ id: id }, user);
+        if (updatedUser.matchedCount === 0) {
+            res.status(400).json({success:false,  message: 'User not found!' })
+            return
+        }
+
+        res.status(200).json({success:true, message:"Password updade with success!"});
+    }
+    catch(error){
+        res.status(500).json({success:false, error: error})
+    }
+
 });
 
 module.exports = app => app.use('/api/auth', router);

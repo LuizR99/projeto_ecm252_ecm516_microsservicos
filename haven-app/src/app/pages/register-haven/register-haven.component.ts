@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { HavenService } from 'src/app/services/haven.service';
-import { IHavenRegister } from '../interfaces/IHavenRegister';
+import { IHavenRegister } from '../../interfaces/IHavenRegister';
 
 @Component({
   selector: 'app-register-haven',

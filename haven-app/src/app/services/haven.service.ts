@@ -13,9 +13,6 @@ export class HavenService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getHavens(){
-    return this.httpClient.get<any>(this.urlHaven + "/api/haven");
-  }
   register(haven: IHavenRegister) {
     const token = localStorage.getItem('token')?.replace(`"`,``).replace(`"`,``);
     const httpOptions = {
@@ -27,5 +24,52 @@ export class HavenService {
     return this.httpClient.post(`${this.urlHaven}/api/haven`, haven, httpOptions);
   }
 
+  update(haven: IHaven, id:String) {
+    const token = localStorage.getItem('token')?.replace(`"`,``).replace(`"`,``);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    return this.httpClient.put(`${this.urlHaven}/api/haven/${id}`, haven, httpOptions);
+  }
+
+  getUserHavens(){
+    const token = localStorage.getItem('token')?.replace(`"`,``).replace(`"`,``);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    return this.httpClient.get<any>(this.urlHaven + "/api/haven/user", httpOptions);
+  }
+
+  getByid(id : String){
+    const token = localStorage.getItem('token')?.replace(`"`,``).replace(`"`,``);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    return this.httpClient.get<any>(`${this.urlHaven}/api/haven/${id}`, httpOptions);
+  }
+
+  getHavens(){
+    return this.httpClient.get<any>(this.urlHaven + "/api/haven");
+  }
+
+  delete(id:String){
+    const token = localStorage.getItem('token')?.replace(`"`,``).replace(`"`,``);
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': `Bearer ${token}`
+      })
+    };
+    return this.httpClient.delete(`${this.urlHaven}/api/haven/${id}`, httpOptions);
+  }
+
 }
-btoa

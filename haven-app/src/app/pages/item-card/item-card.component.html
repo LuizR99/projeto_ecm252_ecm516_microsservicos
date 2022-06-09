@@ -1,27 +1,31 @@
   <mat-card class="example-card">
     <img mat-card-image src="http://plantasdecasas.com/wp-content/uploads/2016/11/309-plantas-de-casas-fachadas-front.jpg" alt="casa">
-    <div>
-      <div> Tipo de residencia: {{haven.typeHouse}}</div>
-      <div> Local: {{haven.location}} </div>
+     <div>
+      <div>
+        <div> Tipo de residencia: {{haven.typeHouse}}</div>
+        <div> Local: {{haven.location}} </div>
+      </div>
+      <div>
+        <div> Acolhemos: {{haven.typePeople}} </div>
+        <div> Capacidade: {{haven.quantityPeople}} </div>
+      </div>
+      <mat-card-content>
+        <h3>Descrição</h3>
+        <p>
+          {{haven.description}}
+        </p>
+      </mat-card-content>
     </div>
-    <div>
-      <div> Acolhemos: {{haven.typePeople}} </div>
-      <div> Capacidade: {{haven.quantityPeople}} </div>
-    </div>
-    <mat-card-content>
-      <h3>Descrição</h3>
-      <p>
-        {{haven.description}}
-      </p>
-    </mat-card-content>
     <mat-card-actions>
       <button mat-button class="informatiom-button" (click)="onClickContato()">CONTATO</button>
+      <button mat-button class="informatiom-button" (click)="onClickEdit()"  *ngIf="edit">EDIT</button>
+      <button mat-button class="informatiom-button" (click)="onClickRemove()" *ngIf="edit">REMOVE</button>
     </mat-card-actions>
     <div *ngIf="showContato">
       <ul>
-        <li>Nome: Rogerio da Silva   </li>
-        <li>Telefone: (11) 99999-9999  </li>
-        <li>Email: email@email.com</li> 
+        <li>Nome: {{user.name}}   </li>
+        <li>Telefone: {{user.phoneNumber}}  </li>
+        <li>Email: {{user.email}}</li> 
       </ul>         
     </div>
   </mat-card>

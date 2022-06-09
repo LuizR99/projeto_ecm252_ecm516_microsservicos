@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Router} from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
 
@@ -10,6 +10,8 @@ import { AuthService } from 'src/app/services/auth.service';
 export class PrincipalComponent implements OnInit {
 
   isLogado: boolean = false;
+
+  @Input() title = "Home";
 
   constructor(private router: Router, private auth: AuthService) { }
 
@@ -29,6 +31,23 @@ export class PrincipalComponent implements OnInit {
 
   addHaven(){
     this.router.navigate(['add-haven']);
+  }
+
+  editUser(){
+    this.router.navigate(['edit-user']);
+  }
+  
+  changePassword(){
+    this.router.navigate(['change-password']);
+  }
+
+  editHaven(){
+    this.router.navigate(['havens']);
+  }
+
+
+  home(){
+    this.router.navigate(['/']);
   }
 
 }
