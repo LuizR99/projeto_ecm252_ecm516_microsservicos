@@ -1,0 +1,98 @@
+version: "3.7"
+
+services:
+  authenticate-db:
+    image: mongo
+    container_name: authenticate-db
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+    volumes:
+      - ./mss-authenticate/data:/var/lib/mongodb
+    
+  mss-authenticate-api:
+    build:
+      context: "./mss-authenticate"
+      dockerfile: Dockerfile
+    container_name: mss-authenticate-api
+    restart: always
+    volumes:
+      - ./mss-authenticate/data:/home/node/app
+    ports:
+      - "5000:5000"
+    depends_on:
+      - authenticate-db
+    environment:
+      DB_HOST: authenticate-db
+      DB_USER: root
+      DB_PASSWORD: 123456
+      DB_NAME: authenticate_db
+      DB_PORT: 27017
+      
+  
+  user-db:
+    image: mongo
+    container_name: user-db
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+    volumes:
+      - ./mss-user/data:/var/lib/mongodb
+    
+  mss-user-api:
+    build:
+      context: "./mss-user"
+      dockerfile: Dockerfile
+    container_name: mss-user-api
+    restart: always
+    volumes:
+      - ./mss-user/data:/home/node/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - user-db
+      - mss-authenticate-api
+    environment:
+      DB_HOST: user-db
+      DB_USER: root
+      DB_PASSWORD: 123456
+      DB_NAME: user_db
+      DB_PORT: 27017
+      
+  haven-db:
+    image: mongo
+    container_name: haven-db
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: 123456
+    volumes:
+      - ./mss-haven/data:/var/lib/mongodb
+    
+  mss-haven-api:
+    build:
+      context: "./mss-haven"
+      dockerfile: Dockerfile
+    container_name: mss-haven-api
+    restart: always
+    volumes:
+      - ./mss-haven/data:/home/node/app
+    ports:
+      - "4000:4000"
+    depends_on:
+      - haven-db
+      - mss-authenticate-api
+    environment:
+      DB_HOST: haven-db
+      DB_USER: root
+      DB_PASSWORD: 123456
+      DB_NAME: haven_db
+      DB_PORT: 27017
+      
+
+      
+    
+  
+

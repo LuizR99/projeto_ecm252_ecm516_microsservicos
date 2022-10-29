@@ -13,7 +13,7 @@ app.use(express.json());
 app.use(
     jwt({
     secret: jwksClient.expressJwtSecret({
-        jwksUri: "http://localhost:5000/.well-known/jwks.json",
+        jwksUri: "http://mss-authenticate-api:5000/.well-known/jwks.json",
         cache: true,
         rateLimit: true,
     }),

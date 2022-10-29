@@ -21,7 +21,7 @@ router.post("/", async (req, res) => {
         const hash = await bcrypt.hash(password, 10);
         const id = uuidv4();
 
-        await axios.post('http://localhost:5000/api/auth/register', {id: id, userName: email, password: hash});
+        await axios.post('http://mss-authenticate-api:5000/api/auth/register', {id: id, userName: email, password: hash});
 
         
         const newUser = {id, name, email, phoneNumber};
@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
         return res.status(201).send({success:true, data: user});
     }
     catch(err){
-        return res.status(400).send({success:false, error: 'Registration failed'});
+        return res.status(400).send({success:false, error: 'Registration failed' + err});
     }
 
 });
