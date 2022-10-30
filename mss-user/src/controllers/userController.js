@@ -64,9 +64,13 @@ router.put("/", async (req, res)  => {
 
 
 
+// router.get("/",async (req, res) => {
+//     const result = await User.find({id: req.auth.id});
+//     res.send({success:true, data: result});
+// });
+
 router.get("/",async (req, res) => {
-    const result = await User.find({id: req.auth.id});
-    res.send({success:true, data: result});
+    res.send({success:true, data: "Its work!!"});
 });
 
 router.get("/:id",async (req, res) => {
