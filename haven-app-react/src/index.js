@@ -1,12 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import Login from './components/Login'
-import Register from './components/Register'
+import App from './components/App'
 
 ReactDOM.render(
-   <div>
-      <Login />
-      <Register />
-   </div>,
+   <App />,
    document.querySelector('#root')
 )
