@@ -60,6 +60,7 @@ services:
       DB_PASSWORD: 123456
       DB_NAME: user_db
       DB_PORT: 27017
+      API_JWKSURI: http://mss-authenticate-api:5000/.well-known/jwks.json
       
   haven-db:
     image: mongo

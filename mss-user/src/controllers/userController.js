@@ -64,16 +64,16 @@ router.put("/", async (req, res)  => {
 
 
 
-// router.get("/",async (req, res) => {
-//     const result = await User.find({id: req.auth.id});
-//     res.send({success:true, data: result});
-// });
+router.get("/data",async (req, res) => {
+    const result = await User.find({id: req.auth.id});
+    res.send({success:true, data: result});
+});
 
 router.get("/",async (req, res) => {
     res.send({success:true, data: "Its work!!"});
 });
 
-router.get("/:id",async (req, res) => {
+router.get("/data/:id",async (req, res) => {
     const users = await User.find({id: req.params.id});
     res.send({success:true, data: users});
 });
