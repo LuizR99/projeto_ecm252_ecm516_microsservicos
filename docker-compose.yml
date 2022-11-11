@@ -24,11 +24,7 @@ services:
     depends_on:
       - authenticate-db
     environment:
-      DB_HOST: authenticate-db
-      DB_USER: root
-      DB_PASSWORD: 123456
-      DB_NAME: authenticate_db
-      DB_PORT: 27017
+      CONNECTIONSTRING: mongodb://root:123456@authenticate-db:27017/authenticate_db?authSource=admin
       
   
   user-db:
@@ -55,12 +51,8 @@ services:
       - user-db
       - mss-authenticate-api
     environment:
-      DB_HOST: user-db
-      DB_USER: root
-      DB_PASSWORD: 123456
-      DB_NAME: user_db
-      DB_PORT: 27017
       API_JWKSURI: http://mss-authenticate-api:5000/.well-known/jwks.json
+      CONNECTIONSTRING: mongodb://root:123456@user-db:27017/user_db?authSource=admin
       
   haven-db:
     image: mongo
@@ -86,11 +78,8 @@ services:
       - haven-db
       - mss-authenticate-api
     environment:
-      DB_HOST: haven-db
-      DB_USER: root
-      DB_PASSWORD: 123456
-      DB_NAME: haven_db
-      DB_PORT: 27017
+      API_JWKSURI: http://mss-authenticate-api:5000/.well-known/jwks.json
+      CONNECTIONSTRING: mongodb://root:123456@haven-db:27017/haven_db?authSource=admin
       
 
       
