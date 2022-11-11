@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:  
+  name: mss-haven-deployment
+  labels:
+    app: mss-haven
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mss-haven
+  template:
+    metadata:
+      labels:
+        app: mss-haven
+    spec:
+      containers:
+      - image: mss-haven:latest
+        imagePullPolicy: IfNotPresent
+        name: mss-haven
+        env:
+          - name: PORT
+            value: "8080"
+          - name: CONNECTIONSTRING
+            value: mongodb://root:123456@haven-db-service:27017/haven_db?authSource=admin
+          - name: API_JWKSURI
+            value: http://mss-authenticate-service:8080/.well-known/jwks.json
+        ports:
+        - containerPort: 8080
+          name: port-mss-haven
+        resources:
+          limits:
+            cpu: 200m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 50Mi
+      restartPolicy: Always
+ 

@@ -22,4 +22,4 @@ app.use(
 
 require('./controllers/userController')(app);
 
-app.listen(3000, '0.0.0.0');
+app.listen(process.env.PORT || 3000, '0.0.0.0');

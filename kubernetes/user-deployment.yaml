@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:  
+  name: mss-user-deployment
+  labels:
+    app: mss-user
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mss-user
+  template:
+    metadata:
+      labels:
+        app: mss-user
+    spec:
+      containers:
+      - image: mss-user:latest
+        imagePullPolicy: IfNotPresent
+        name: mss-user
+        env:
+          - name: PORT
+            value: "8080"
+          - name: AUTH_URL
+            value: http://mss-authenticate-service:8080/api/auth/register
+          - name: API_JWKSURI
+            value: http://mss-authenticate-service:8080/.well-known/jwks.json
+          - name: CONNECTIONSTRING
+            value: mongodb://root:a123456@user-db-service:27017/user_db?authSource=admin
+        ports:
+        - containerPort: 8080
+          name: port-mss-user
+        resources:
+          limits:
+            cpu: 200m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 50Mi
+      restartPolicy: Always
+ 

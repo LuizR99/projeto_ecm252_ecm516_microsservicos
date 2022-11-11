@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: haven-db
+  name: haven-db-service
+spec:
+  ports:
+  - port: 27017
+    targetPort: port-haven-db
+  selector:
+    app: haven-db

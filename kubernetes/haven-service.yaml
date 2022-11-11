@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mss-haven
+  name: mss-haven-service
+spec:
+  ports:
+  - port: 8080
+    targetPort: port-mss-haven
+  selector:
+    app: mss-haven

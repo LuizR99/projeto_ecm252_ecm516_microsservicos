@@ -21,7 +21,7 @@ router.post("/", async (req, res) => {
         const hash = await bcrypt.hash(password, 10);
         const id = uuidv4();
 
-        await axios.post('http://mss-authenticate-api:5000/api/auth/register', {id: id, userName: email, password: hash});
+        await axios.post(process.env.AUTH_URL, {id: id, userName: email, password: hash});
 
         
         const newUser = {id, name, email, phoneNumber};

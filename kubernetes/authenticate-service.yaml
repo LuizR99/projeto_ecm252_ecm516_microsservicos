@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mss-authenticate
+  name: mss-authenticate-service
+spec:
+  ports:
+  - port: 8080
+    targetPort: port-mss-auth
+  selector:
+    app: mss-authenticate

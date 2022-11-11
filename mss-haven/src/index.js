@@ -24,4 +24,4 @@ app.use(
 
 require('./controllers/havenController')(app);
 
-app.listen(4000, '0.0.0.0');
+app.listen(process.env.PORT || 4000, '0.0.0.0');

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:  
+  name: mss-authenticate-deployment
+  labels:
+    app: mss-authenticate
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mss-authenticate
+  template:
+    metadata:
+      labels:
+        app: mss-authenticate
+    spec:
+      containers:
+      - image: mss-auth:latest
+        imagePullPolicy: IfNotPresent
+        name: mss-authenticate
+        env:
+          - name: PORT
+            value: "8080"
+          - name: CONNECTIONSTRING
+            value: mongodb://root:123456@authenticate-db-service:27017/authenticate_db?authSource=admin
+        ports:
+        - containerPort: 8080
+          name: port-mss-auth
+        resources:
+          limits:
+            cpu: 200m
+            memory: 100Mi
+          requests:
+            cpu: 100m
+            memory: 50Mi
+      restartPolicy: Always
+ 
