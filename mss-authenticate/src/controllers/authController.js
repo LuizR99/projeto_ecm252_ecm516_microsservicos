@@ -4,6 +4,24 @@ const fs = require('fs');
 const bcrypt = require('bcryptjs');
 
 const User = require('../models/user');
+const queue = require("../mq/rabbitmq");
+
+queue.consume("user", async (message) => {
+    const body = JSON.parse(message.content.toString());
+    const {userName} = body
+    try{
+        if(await User.findOne({userName}))
+            return res.status(400).send({success:false, error: 'User already exists'});
+
+        const user = await User.create(body);
+        user.password = undefined;
+
+        return res.status(201).send({success:true, data: user});
+    }
+    catch(err){
+        return res.status(400).send({success:false, error: 'Registration failed'});
+    }
+})
 
 const router = express.Router();
 
@@ -28,19 +46,7 @@ router.post('/login', async (req, res) => {
 });
 
 router.post('/register', async (req, res) => {
-    const {userName} = req.body;
-    try{
-        if(await User.findOne({userName}))
-            return res.status(400).send({success:false, error: 'User already exists'});
-
-        const user = await User.create(req.body);
-        user.password = undefined;
-
-        return res.status(201).send({success:true, data: user});
-    }
-    catch(err){
-        return res.status(400).send({success:false, error: 'Registration failed'});
-    }
+    
 });
 
 router.put("/password", async (req, res)  => {

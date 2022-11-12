@@ -16,8 +16,10 @@ app.use(
         rateLimit: true,
     }),
     algorithms: ['RS256']
-    }).unless({path:[ { url: '/api/auth/register', methods: ['POST']}, { url: '/api/auth/login', methods: ['POST']}]})
+    }).unless({path:[{ url: '/api/auth/login', methods: ['POST']}]})
 )
+
+
 
 require('./controllers/authController')(app);
 
