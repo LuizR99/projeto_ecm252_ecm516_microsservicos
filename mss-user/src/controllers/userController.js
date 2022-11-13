@@ -4,13 +4,16 @@ const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
 
 const User = require('../models/user');
+const queue = require("../mq/rabbitmq");
 
 const router = express.Router();
 
 
 router.post("/", async (req, res) => {
     const {email} = req.body;
+
     try{
+        
         if(await User.findOne({email}))
             return res.status(400).send({success:false, error: 'User already exists'});
 
@@ -21,8 +24,7 @@ router.post("/", async (req, res) => {
         const hash = await bcrypt.hash(password, 10);
         const id = uuidv4();
 
-        await axios.post(process.env.AUTH_URL, {id: id, userName: email, password: hash});
-
+        queue.sendToQueue("user", {id: id, userName: email, password: hash});
         
         const newUser = {id, name, email, phoneNumber};
 
@@ -77,7 +79,6 @@ router.get("/data/:id",async (req, res) => {
     const users = await User.find({id: req.params.id});
     res.send({success:true, data: users});
 });
-
 
 
 

@@ -8,19 +8,7 @@ const queue = require("../mq/rabbitmq");
 
 queue.consume("user", async (message) => {
     const body = JSON.parse(message.content.toString());
-    const {userName} = body
-    try{
-        if(await User.findOne({userName}))
-            return res.status(400).send({success:false, error: 'User already exists'});
-
-        const user = await User.create(body);
-        user.password = undefined;
-
-        return res.status(201).send({success:true, data: user});
-    }
-    catch(err){
-        return res.status(400).send({success:false, error: 'Registration failed'});
-    }
+    await User.create(body);
 })
 
 const router = express.Router();
@@ -45,9 +33,6 @@ router.post('/login', async (req, res) => {
     res.send({success:true, token});
 });
 
-router.post('/register', async (req, res) => {
-    
-});
 
 router.put("/password", async (req, res)  => {
     const id = req.auth.id;

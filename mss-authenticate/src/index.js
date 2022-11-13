@@ -11,7 +11,7 @@ app.use(express.static('public'));
 app.use(
     jwt({
     secret: jwksClient.expressJwtSecret({
-        jwksUri: "http://localhost:5000/.well-known/jwks.json",
+        jwksUri: process.env.API_JWKSURI,
         cache: true,
         rateLimit: true,
     }),

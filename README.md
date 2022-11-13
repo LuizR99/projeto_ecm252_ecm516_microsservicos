@@ -31,9 +31,9 @@ Vinicius Savrutsky Ivankovich 19.01014-0
 
 2 - Comandos com KIND:
     - kind create cluster --name haven-cluster
-    - kind load docker-image mss-user --name haven-cluster
-    - kind load docker-image mss-haven --name haven-cluster
-    - kind load docker-image mss-auth --name haven-cluster
+    - kind load docker-image mss-user:latest --name haven-cluster
+    - kind load docker-image mss-haven:latest --name haven-cluster
+    - kind load docker-image mss-auth:latest --name haven-cluster
 
 3 - Comando Kubernets 
     - kubectl apply -f ./kubernetes/

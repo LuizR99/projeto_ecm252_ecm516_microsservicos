@@ -20,13 +20,15 @@ services:
     volumes:
       - ./mss-authenticate/data:/home/node/app
     ports:
-      - "5000:8080"
+      - "3200:8080"
     depends_on:
       - authenticate-db
+      - rabbitmq
     environment:
       PORT: 8080
       CONNECTIONSTRING: mongodb://root:123456@authenticate-db:27017/authenticate_db?authSource=admin
-      
+      RABBITMQ: amqp://admin:admin@rabbitmq:5672    
+      API_JWKSURI: http://mss-authenticate-api:8080/.well-known/jwks.json
   
   user-db:
     image: mongo
@@ -47,15 +49,16 @@ services:
     volumes:
       - ./mss-user/data:/home/node/app
     ports:
-      - "3000:8080"
+      - "3100:8080"
     depends_on:
       - user-db
       - mss-authenticate-api
+      - rabbitmq
     environment:
       PORT: 8080
-      AUTH_URL: http://mss-authenticate-api:5000/api/auth/register
       API_JWKSURI: http://mss-authenticate-api:8080/.well-known/jwks.json
       CONNECTIONSTRING: mongodb://root:123456@user-db:27017/user_db?authSource=admin
+      RABBITMQ: amqp://admin:admin@rabbitmq:5672
       
   haven-db:
     image: mongo
@@ -76,7 +79,7 @@ services:
     volumes:
       - ./mss-haven/data:/home/node/app
     ports:
-      - "4000:8080"
+      - "3300:8080"
     depends_on:
       - haven-db
       - mss-authenticate-api
@@ -84,7 +87,20 @@ services:
       PORT: 8080
       API_JWKSURI: http://mss-authenticate-api:8080/.well-known/jwks.json
       CONNECTIONSTRING: mongodb://root:123456@haven-db:27017/haven_db?authSource=admin
-      
+
+  rabbitmq:
+    image: rabbitmq:management-alpine
+    container_name: rabbitmq
+    restart: always
+    hostname: rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
+    volumes:
+      - ./rabbitmq_data:/var/lib/rabbitmq
+    environment:
+      - RABBITMQ_DEFAULT_USER=admin
+      - RABBITMQ_DEFAULT_PASS=admin
 
       
     
