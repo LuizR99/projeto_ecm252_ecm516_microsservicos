@@ -7,8 +7,13 @@ const User = require('../models/user');
 const queue = require("../mq/rabbitmq");
 
 queue.consume("user", async (message) => {
+    console.log("Established connection")
     const body = JSON.parse(message.content.toString());
-    await User.create(body);
+    const {id} = body;
+    if(await User.findOne({id}))
+        await User.updateOne({ id: id },body);
+    else 
+        await User.create(body);
 })
 
 const router = express.Router();

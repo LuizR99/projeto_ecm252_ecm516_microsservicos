@@ -17,6 +17,23 @@ class AuthService {
       });
   }
 
+  updatePassword({password, confirmPassword}) {
+    const token =JSON.parse(localStorage.getItem('token'))
+    return axios
+      .put(API_URL+"password", {
+        password, 
+        confirmPassword
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+      .then(response => {
+        return response.data;
+        });
+  }
+
   logout() {
     localStorage.removeItem("token");
   }

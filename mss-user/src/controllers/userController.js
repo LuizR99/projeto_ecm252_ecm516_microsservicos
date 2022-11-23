@@ -55,6 +55,7 @@ router.put("/", async (req, res)  => {
         if (updatedUser.matchedCount === 0) 
             return res.status(400).json({ success:false, message: 'User not found!' });
 
+        queue.sendToQueue("user", {id: id, userName: email});
 
         res.status(200).json({success:true, data: user});
     }

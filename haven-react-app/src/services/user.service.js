@@ -17,6 +17,33 @@ class UserService {
         });
   }
 
+  update({name, email, phoneNumber}) {
+    const token =JSON.parse(localStorage.getItem('token'))
+    return axios
+      .put(API_URL, {
+        name, 
+        email, 
+        phoneNumber
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        })
+      .then(response => {
+        return response.data;
+        });
+  }
+
+  getUser(){
+    const token =JSON.parse(localStorage.getItem('token'))
+    return axios.get(API_URL + "/data", {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    }).then((resp) => resp.data);
+  }
+
 }
 
 export default new UserService();

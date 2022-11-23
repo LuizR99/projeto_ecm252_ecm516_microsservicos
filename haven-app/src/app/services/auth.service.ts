@@ -11,7 +11,7 @@ import { IPassword } from '../interfaces/IPassword';
 export class AuthService {
 
 
-  urlAuth = "http://localhost:5000";
+  urlAuth = "http://localhost:3200";
 
   constructor(private httpClient: HttpClient,
               private router: Router) { }

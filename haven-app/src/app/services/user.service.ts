@@ -7,7 +7,7 @@ import { IUser } from '../interfaces/IUser';
 })
 export class UserService {
 
-  urlUser = "http://localhost:3000";
+  urlUser = "http://localhost:3100";
 
   constructor(private http:HttpClient) { }
 
@@ -23,7 +23,7 @@ export class UserService {
         'Authorization': `Bearer ${token}`
       })
     };
-    return this.http.get<any>(`${this.urlUser}/api/user/${userId}`, httpOptions);
+    return this.http.get<any>(`${this.urlUser}/api/user/data/${userId}`, httpOptions);
   }
 
   update(user: IUser) {

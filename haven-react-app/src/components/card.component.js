@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 
 
 export default function Card(props){
@@ -18,8 +18,8 @@ export default function Card(props){
                     {props.editable ? 
                         (
                             <>
-                            <a href="#" className="btn btn-outline-primary m-1">Editar</a>
-                            <a href="#" className="btn btn-outline-danger m-1">Remover</a>
+                            <button onClick= {()=> props.edit()} className="btn btn-outline-primary m-1">Editar</button>
+                            <button onClick={()=>props.remove(props.havens.id)} className="btn btn-outline-danger m-1">Remover</button>
                             </>
                         ) : (<></>)
                     }

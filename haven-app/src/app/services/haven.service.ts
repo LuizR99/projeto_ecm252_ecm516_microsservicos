@@ -8,7 +8,7 @@ import { IHavenRegister } from '../interfaces/IHavenRegister';
 })
 export class HavenService {
 
-  urlHaven = "http://localhost:4000";
+  urlHaven = "http://localhost:3300";
 
 
   constructor(private httpClient: HttpClient) { }
