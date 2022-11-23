@@ -3,17 +3,16 @@ import axios from "axios";
 const API_URL = "http://localhost:3200/api/auth/";
 
 class AuthService {
-  login(email, password) {
+  login({email, password}) {
     return axios
       .post(API_URL + "login", {
         email,
         password
       })
       .then(response => {
-        if (response.success) {
-          localStorage.setItem("token", JSON.stringify(response.token));
+        if (response.data.success) {          
+          localStorage.setItem("token", JSON.stringify(response.data.token));
         }
-
         return response.data;
       });
   }
@@ -23,8 +22,8 @@ class AuthService {
   }
 
 
-  getCurrentUser() {
-    return JSON.parse(localStorage.getItem('token'));;
+  getToken() {
+    return JSON.parse(localStorage.getItem('token'));
   }
 }
 
