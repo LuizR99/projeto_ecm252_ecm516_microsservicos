@@ -1,7 +1,33 @@
-import React from 'react';
+import React, {useState} from 'react';
+import UserService from "../services/haven.service";
+import userService from '../services/user.service';
 
 
 export default function Card(props){
+    const [showContact, setShowContact] = useState(false);
+    const [contact, setContact] = useState(null);
+
+    const getContact = (id) =>{
+
+        if(showContact)
+        {
+            setShowContact(false);
+            return;
+        }
+
+        if(contact !== null){
+            setShowContact(true);
+            return
+        }
+
+        userService.getUserById(id).then(
+        resp =>{
+            setContact(resp.data[0]);
+            console.log(resp.data);
+            setShowContact(true);
+        }) ;
+    }
+
     return (
         <div className="card m-4" style={{width: "50rem"}}>
             <img className="card-img-top" src="http://plantasdecasas.com/wp-content/uploads/2016/11/309-plantas-de-casas-fachadas-front.jpg" alt="casa"/>
@@ -13,8 +39,9 @@ export default function Card(props){
                 <hr></hr>
                 <h5 className="card-title">Descrição:</h5>
                 <p className="card-text">{props.havens.description}</p>
+                <hr></hr>
                 <div>
-                    <a href="#" className="btn btn-outline-info m-1">Contato</a>
+                    <button onClick = {() => getContact(props.havens.idUser)} className="btn btn-outline-info m-1">Contato</button>
                     {props.editable ? 
                         (
                             <>
@@ -24,6 +51,19 @@ export default function Card(props){
                         ) : (<></>)
                     }
                 </div>
+                { showContact ? 
+                    (
+                        <>                
+                        <div>
+                            <ul>
+                                <li>Nome:  {contact.name} </li>
+                                <li>Telefone:  {contact.phoneNumber} </li>
+                                <li>Email: {contact.email}</li> 
+                            </ul>         
+                        </div>
+                        </>
+                    ): (<></>)
+                }
             </div>
         </div>
     );

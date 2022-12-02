@@ -44,6 +44,16 @@ class UserService {
     }).then((resp) => resp.data);
   }
 
+  getUserById(id){
+    const token =JSON.parse(localStorage.getItem('token'))
+    return axios.get(API_URL + `/data/${id}`, {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    }).then((resp) => resp.data);
+  }
+
+
 }
 
 export default new UserService();
