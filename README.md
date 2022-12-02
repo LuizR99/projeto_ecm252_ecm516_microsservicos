@@ -1,5 +1,7 @@
 # Trabalho de Linguagens de programação 2
 
+video de explicação: https://youtu.be/w9QvoUOr5Fg
+
 ## Integrantes
 Igor de Brito Coura 19.00165-7  
 Lucas Ribeiro Gonçalves RA: 19.00194-0  
